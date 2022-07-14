@@ -6,17 +6,17 @@ Created on Sat May 23 15:13:01 2020
 @author: aimachine
 """
 
-from oneat.NEATUtils import plotters
+from slimoneat.NEATUtils import plotters
 import numpy as np
-from oneat.NEATUtils import helpers
-from oneat.NEATUtils.helpers import load_json, yoloprediction, normalizeFloatZeroOne, \
+from slimoneat.NEATUtils import helpers
+from slimoneat.NEATUtils.helpers import load_json, yoloprediction, normalizeFloatZeroOne, \
  goodboxes, save_static_csv, DownsampleData
 from keras import callbacks
 import os
 from tqdm import tqdm
-from oneat.NEATModels import nets
-from oneat.NEATModels.nets import Concat
-from oneat.NEATModels.loss import static_yolo_loss, static_yolo_loss_segfree, class_yolo_loss
+from slimoneat.NEATModels import nets
+from slimoneat.NEATModels.nets import Concat
+from slimoneat.NEATModels.loss import static_yolo_loss, static_yolo_loss_segfree, class_yolo_loss
 from keras import backend as K
 import tensorflow as tf
 # from IPython.display import clear_output
@@ -290,7 +290,7 @@ class NEATStatic(object):
         self.Trainingmodel.save(self.model_dir + self.model_name)
 
     def predict(self, imagename, savedir, event_threshold, n_tiles=(1, 1), overlap_percent=0.8, iou_threshold=0.01,
-                height=None, width=None, RGB=False, fidelity = 1, downsamplefactor = 1, normalize = True, center_oneat = True):
+                height=None, width=None, RGB=False, fidelity = 1, downsamplefactor = 1, normalize = True, center_slimoneat = True):
 
         self.imagename = imagename
         self.image = imread(imagename)
@@ -301,7 +301,7 @@ class NEATStatic(object):
                                          dtype='uint16')
         self.savedir = savedir
         self.n_tiles = n_tiles
-        self.center_oneat = center_oneat
+        self.center_slimoneat = center_slimoneat
         self.RGB = RGB
         self.height = height
         self.width = width
@@ -353,7 +353,7 @@ class NEATStatic(object):
                             time_prediction = sum_time_prediction[i]
                             boxprediction = yoloprediction(ally[p], allx[p], time_prediction, self.stride, inputtime,
                                                            self.staticconfig, self.key_categories, self.key_cord,
-                                                           self.nboxes, 'detection', 'static', center_oneat = self.center_oneat)
+                                                           self.nboxes, 'detection', 'static', center_slimoneat = self.center_slimoneat)
 
                             if boxprediction is not None:
                                 eventboxes = eventboxes + boxprediction
@@ -399,7 +399,7 @@ class NEATStatic(object):
 
                         boxprediction = yoloprediction(ally[p], allx[p], time_prediction, self.stride, 0,
                                                            self.staticconfig, self.key_categories, self.key_cord,
-                                                           self.nboxes, 'detection', 'static', center_oneat = self.center_oneat)
+                                                           self.nboxes, 'detection', 'static', center_slimoneat = self.center_slimoneat)
                     
 
                         if boxprediction is not None:

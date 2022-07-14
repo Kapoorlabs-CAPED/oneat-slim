@@ -1,7 +1,7 @@
-from oneat.NEATUtils import plotters
+from slimoneat.NEATUtils import plotters
 import numpy as np
-from oneat.NEATUtils import helpers
-from oneat.NEATUtils.helpers import  load_json, normalizeFloatZeroOne, focyoloprediction, simpleaveragenms
+from slimoneat.NEATUtils import helpers
+from slimoneat.NEATUtils.helpers import  load_json, normalizeFloatZeroOne, focyoloprediction, simpleaveragenms
 from keras import callbacks
 import os
 import math
@@ -9,9 +9,9 @@ import pandas as pd
 from scipy.ndimage.filters import median_filter, gaussian_filter, maximum_filter
 import tensorflow as tf
 from tqdm import tqdm
-from oneat.NEATModels import nets
-from oneat.NEATModels.nets import Concat
-from oneat.NEATModels.loss import dynamic_yolo_loss
+from slimoneat.NEATModels import nets
+from slimoneat.NEATModels.nets import Concat
+from slimoneat.NEATModels.loss import dynamic_yolo_loss
 from keras import backend as K
 #from IPython.display import clear_output
 from keras import optimizers

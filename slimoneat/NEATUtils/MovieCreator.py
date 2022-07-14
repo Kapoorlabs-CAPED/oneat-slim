@@ -1,5 +1,3 @@
-import sys
-sys.path.append("../NEAT")
 import csv
 import numpy as np
 from tifffile import imread, imwrite 

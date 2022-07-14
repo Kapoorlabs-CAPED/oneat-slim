@@ -1,7 +1,7 @@
-from oneat.NEATUtils import plotters
+from slimoneat.NEATUtils import plotters
 import numpy as np
-from oneat.NEATUtils import helpers
-from oneat.NEATUtils.helpers import MidSlices, pad_timelapse,  MidSlicesSum, get_nearest,  load_json, yoloprediction, normalizeFloatZeroOne, GenerateMarkers, MakeTrees, DownsampleData,save_dynamic_csv, dynamic_nms, gold_nms
+from slimoneat.NEATUtils import helpers
+from slimoneat.NEATUtils.helpers import MidSlices, pad_timelapse,  MidSlicesSum, get_nearest,  load_json, yoloprediction, normalizeFloatZeroOne, GenerateMarkers, MakeTrees, DownsampleData,save_dynamic_csv, dynamic_nms, gold_nms
 from keras import callbacks
 import os
 import keras
@@ -9,12 +9,12 @@ import sys
 from scipy.ndimage.morphology import binary_dilation, binary_erosion
 import math
 from tqdm import tqdm
-from oneat.NEATModels import nets
-from oneat.NEATModels.nets import Concat
-from oneat.NEATModels.loss import dynamic_yolo_loss
+from slimoneat.NEATModels import nets
+from slimoneat.NEATModels.nets import Concat
+from slimoneat.NEATModels.loss import dynamic_yolo_loss
 from keras import backend as K
 import tensorflow as tf
-from oneat.pretrained import get_registered_models, get_model_details, get_model_instance
+from slimoneat.pretrained import get_registered_models, get_model_details, get_model_instance
 from pathlib import Path
 from keras.models import load_model
 from tifffile import imread, imwrite
@@ -303,7 +303,7 @@ class NEATDynamic(object):
     
     def predict(self, imagename,  savedir, n_tiles=(1, 1), overlap_percent=0.8,
                 event_threshold=0.5, event_confidence = 0.5, iou_threshold=0.1,  fidelity=1, downsamplefactor = 1, start_project_mid = 4, end_project_mid = 4,
-                erosion_iterations = 1,  marker_tree = None, remove_markers = False, normalize = True, center_oneat = True, nms_function = 'iou'):
+                erosion_iterations = 1,  marker_tree = None, remove_markers = False, normalize = True, center_slimoneat = True, nms_function = 'iou'):
 
 
         
@@ -339,7 +339,7 @@ class NEATDynamic(object):
         self.event_confidence = event_confidence
         self.downsamplefactor = downsamplefactor
         self.originalimage = self.image
-        self.center_oneat = center_oneat
+        self.center_slimoneat = center_slimoneat
         
         self.model = load_model(os.path.join(self.model_dir, self.model_name) + '.h5',
                                 custom_objects={'loss': self.yololoss, 'Concat': Concat})
@@ -404,7 +404,7 @@ class NEATDynamic(object):
                                           self.config, 
                                           self.key_categories, 
                                           self.key_cord, 
-                                          self.nboxes, 'detection', 'dynamic',marker_tree=self.marker_tree, center_oneat = self.center_oneat)
+                                          self.nboxes, 'detection', 'dynamic',marker_tree=self.marker_tree, center_slimoneat = self.center_slimoneat)
                                           
                                           if boxprediction is not None:
                                                   eventboxes = eventboxes + boxprediction
@@ -464,7 +464,7 @@ class NEATDynamic(object):
                             boxprediction = yoloprediction(ally[p], allx[p], time_prediction, self.stride,
                                                            inputtime, self.config,
                                                            self.key_categories, self.key_cord, self.nboxes, 'detection',
-                                                           'dynamic', marker_tree = self.marker_tree, center_oneat = False)
+                                                           'dynamic', marker_tree = self.marker_tree, center_slimoneat = False)
                                           
                             if boxprediction is not None:
                                 eventboxes = eventboxes + boxprediction
@@ -557,7 +557,7 @@ class NEATDynamic(object):
                                      boxprediction = yoloprediction(0, 0 , time_prediction, self.stride,
                                                            inputtime, self.config,
                                                            self.key_categories, self.key_cord, self.nboxes, 'detection',
-                                                           'dynamic', center_oneat = self.center_oneat)
+                                                           'dynamic', center_slimoneat = self.center_slimoneat)
                                      if boxprediction is not None and len(boxprediction) > 0 and xcenter - self.pad_width[1] > 0 and ycenter - self.pad_width[0] > 0 and xcenter - self.pad_width[1] < self.originalimage.shape[2] and ycenter - self.pad_width[0] < self.originalimage.shape[1] :
                                             
                                                 

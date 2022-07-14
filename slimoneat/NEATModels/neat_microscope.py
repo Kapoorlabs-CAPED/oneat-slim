@@ -5,15 +5,15 @@ Created on Sun Apr 25 13:32:04 2021
 
 @author: vkapoor
 """
-from oneat.NEATUtils import plotters
+from slimoneat.NEATUtils import plotters
 import numpy as np
-from oneat.NEATUtils import helpers
-from oneat.NEATUtils.helpers import load_json, yoloprediction, normalizeFloatZeroOne,microscope_dynamic_nms
+from slimoneat.NEATUtils import helpers
+from slimoneat.NEATUtils.helpers import load_json, yoloprediction, normalizeFloatZeroOne,microscope_dynamic_nms
 from keras import callbacks
 import os
 import tensorflow as tf
 import time
-from oneat.NEATModels.nets import Concat
+from slimoneat.NEATModels.nets import Concat
 from tqdm import tqdm
 # from IPython.display import clear_output
 from pathlib import Path
@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 import h5py
 import cv2
 import matplotlib.pyplot as plt
-from oneat.NEATModels.neat_goldstandard import NEATDynamic
+from slimoneat.NEATModels.neat_goldstandard import NEATDynamic
 from tifffile import imread, imwrite
 
 class NEATPredict(NEATDynamic):
@@ -40,7 +40,7 @@ class NEATPredict(NEATDynamic):
                 Z_start = 0, downsample=1, roi_start = 0, roi_end = 1, movie_name_list = {}, movie_input = {}, Z_movie_name_list = [], Z_movie_input = [],
                 fileextension='*TIF', nb_prediction=3, n_tiles=(1, 1), Z_n_tiles=(1, 2, 2),
                 overlap_percent=0.6, event_threshold = 0.5, event_confidence = 0.5, iou_threshold=0.01, projection_model=None, delay_projection=4,
-                fidelity=4, jumpindex = 1, normalize = True,  optional_name = None, center_oneat = True, nms_function = 'iou'):
+                fidelity=4, jumpindex = 1, normalize = True,  optional_name = None, center_slimoneat = True, nms_function = 'iou'):
 
         self.imagedir = imagedir
         self.basedirResults = self.imagedir + '/' + "live_results"
@@ -71,7 +71,7 @@ class NEATPredict(NEATDynamic):
         self.event_confidence = event_confidence
         self.downsample = downsample
         self.normalize = normalize
-        self.center_oneat = center_oneat
+        self.center_slimoneat = center_slimoneat
         f = h5py.File(self.model_dir + self.model_name + '.h5', 'r+')
         data_p = f.attrs['training_config']
         data_p = data_p.decode().replace("learning_rate", "lr").encode()
@@ -187,7 +187,7 @@ class NEATPredict(NEATDynamic):
                    smallimage = normalizeFloatZeroOne(smallimage, 1, 99.8)
                 # Break image into tiles if neccessary
                 self.image = smallimage
-                print('Doing ONEAT prediction')
+                print('Doing slimoneat prediction')
                 start_time = time.time()
                 predictions, allx, ally = self.predict_main(smallimage)
                 print(f'____ Prediction took {(time.time() - start_time)} seconds ____ ' )
@@ -203,7 +203,7 @@ class NEATPredict(NEATDynamic):
 
                             boxprediction = yoloprediction(ally[p], allx[p], time_prediction, self.stride, inputtime,
                                                            self.config, self.key_categories, self.key_cord, self.nboxes,
-                                                           'prediction', 'dynamic', center_oneat = self.center_oneat)
+                                                           'prediction', 'dynamic', center_slimoneat = self.center_slimoneat)
 
                             if boxprediction is not None:
                                 eventboxes = eventboxes + boxprediction

@@ -7,7 +7,7 @@ Created on Mon Jun 28 13:49:35 2021
 """
 
 from .neat_goldstandard import NEATDynamic
-from oneat.pretrained import get_registered_models, get_model_details, get_model_instance
+from slimoneat.pretrained import get_registered_models, get_model_details, get_model_instance
 import sys
 class NEATSynamic(NEATDynamic):
     
