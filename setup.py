@@ -34,7 +34,8 @@ setup(
         "diplib",
         "sklearn",
         "dask",
-        "natsort"
+        "natsort",
+        "pyqt5"
        
     ],
     packages=setuptools.find_packages(),
