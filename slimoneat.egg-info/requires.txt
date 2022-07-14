@@ -10,3 +10,4 @@ diplib
 sklearn
 dask
 natsort
+pyqt5

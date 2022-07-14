@@ -4,7 +4,7 @@ from ._version import __version__
 from csbdeep.utils.tf import keras_import
 from . import NEATDynamic, NEATSynamic
 
-from oneat.pretrained import register_model, register_aliases, clear_models_and_aliases
+from slimoneat.pretrained import register_model, register_aliases, clear_models_and_aliases
 
 get_file = keras_import('utils', 'get_file')
 
