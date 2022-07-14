@@ -11,7 +11,7 @@ with open(path.join(_dir,'oneat-slim','_version.py'), encoding="utf-8") as f:
     exec(f.read())
 
 setup(
-    name="oneat-slim",
+    name="slimoneat",
 
     version=__version__,
 
