@@ -45,8 +45,14 @@ class static_config(argparse.Namespace):
            self.stage_number = stage_number
            self.last_conv_factor = 2 ** (self.stage_number - 1)
            self.yolo_v0 = yolo_v0
-           self.categories = len(self.key_categories)
-           self.box_vector = len(self.key_cord)
+           if self.key_categories is not None:
+              self.categories = len(self.key_categories)
+           else:
+              self.categories = 0   
+           if self.key_cord is not None:   
+             self.box_vector = len(self.key_cord)
+           else:
+            self.box_vector = 0  
            self.learning_rate = learning_rate
            self.batch_size = batch_size
            self.model_name = model_name
