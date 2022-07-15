@@ -94,7 +94,7 @@ class static_config(argparse.Namespace):
          for (k,v) in self.key_categories.items():
              config[k] = v
              
-         if self.key_cors is not None:     
+         if self.key_cord is not None:     
             for (k,v) in self.key_cord.items():
                 config[k] = v    
          
