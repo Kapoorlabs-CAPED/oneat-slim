@@ -25,7 +25,6 @@ setup(
         
         "pandas",
         "vollseg",
-        "vollseg-napari",
         "scipy",
         "tifffile",
         "matplotlib",
@@ -34,8 +33,7 @@ setup(
         "diplib",
         "sklearn",
         "dask",
-        "natsort",
-        "pyqt5"
+        "natsort"
        
     ],
     packages=setuptools.find_packages(),
