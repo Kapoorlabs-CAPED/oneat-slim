@@ -25,6 +25,7 @@ slimoneat/NEATModels/neat_static_standard.py
 slimoneat/NEATModels/nets.py
 slimoneat/NEATUtils/MovieCreator.py
 slimoneat/NEATUtils/NMS.py
+slimoneat/NEATUtils/SlimViz.py
 slimoneat/NEATUtils/__init__.py
 slimoneat/NEATUtils/helpers.py
 slimoneat/NEATUtils/plotters.py
