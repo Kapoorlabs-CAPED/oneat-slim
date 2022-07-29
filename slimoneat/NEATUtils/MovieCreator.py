@@ -6,7 +6,6 @@ import os
 from tqdm import tqdm
 import glob
 import json
-from skimage.measure import regionprops
 from skimage import measure
 from pathlib import Path
 from sklearn.model_selection import train_test_split

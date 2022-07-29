@@ -1,6 +1,5 @@
 pandas
 vollseg
-vollseg-napari
 scipy
 tifffile
 matplotlib
@@ -10,4 +9,3 @@ diplib
 sklearn
 dask
 natsort
-pyqt5

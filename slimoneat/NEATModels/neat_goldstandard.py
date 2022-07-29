@@ -18,17 +18,12 @@ from slimoneat.pretrained import get_registered_models, get_model_details, get_m
 from pathlib import Path
 from keras.models import load_model
 from tifffile import imread, imwrite
-import glob
+
 from skimage.morphology import erosion, dilation, disk
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import \
-    FigureCanvasQTAgg as FigureCanvas
-from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QComboBox, QPushButton
-import cv2
-from scipy import ndimage
+
 from skimage.measure import label
-from skimage import measure
+
 Boxname = 'ImageIDBox'
 EventBoxname = 'EventIDBox'
 
@@ -518,8 +513,7 @@ class NEATDynamic(object):
         classedboxes = {}
         self.n_tiles = (1,1)
         
-        heatsavename = self.savedir+ "/"  + (os.path.splitext(os.path.basename(self.imagename))[0])+ '_Heat'
-        eventsavename = self.savedir + "/" + (os.path.splitext(os.path.basename(self.imagename))[0])+ '_Event'
+        
         
   
         for inputtime in tqdm(range(int(self.imaget)//2, self.image.shape[0])):
@@ -528,8 +522,7 @@ class NEATDynamic(object):
                 if inputtime%(self.image.shape[0]//4)==0 and inputtime > 0 or inputtime >= self.image.shape[0] - self.imaget - 1:
                                       markers_current = dilation(self.eventmarkers[inputtime,:], disk(2))
                                       self.eventmarkers[inputtime,:] = label(markers_current.astype('uint16')) 
-                                      imwrite((heatsavename + '.tif' ), self.heatmap) 
-                                      imwrite((eventsavename + '.tif' ), self.eventmarkers.astype('uint16'))
+                                      
                 tree, location = self.marker_tree[str(int(inputtime))]
                 for i in range(len(location)):
                     
